@@ -23,6 +23,11 @@ out/
 coverage/
 .nyc_output/
 
+# Playwright MCP
+playwright-profile/
+test-results/
+playwright-report/
+
 # IDE
 .vscode/
 .idea/
