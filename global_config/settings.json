@@ -1,3 +1,20 @@
 {
-  "effortLevel": "xhigh"
+  "effortLevel": "xhigh",
+  "extraKnownMarketplaces": {
+    "fullstack-dev-skills": {
+      "source": { "source": "github", "repo": "jeffallan/claude-skills" }
+    },
+    "claude-market": {
+      "source": { "source": "github", "repo": "claude-market/marketplace" }
+    },
+    "hyperskill-marketplace": {
+      "source": { "source": "github", "repo": "hyperskill/claude-code-marketplace" }
+    },
+    "wshobson-agents": {
+      "source": { "source": "github", "repo": "wshobson/agents" }
+    },
+    "claude-skills-380": {
+      "source": { "source": "github", "repo": "alirezarezvani/claude-skills" }
+    }
+  }
 }
