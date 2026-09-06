@@ -109,6 +109,11 @@ else
     cp "$SRC_SETTINGS" "$DST_SETTINGS"
     log "Installed ~/.claude/settings.json (fresh)"
   else
+    # Snapshot existing settings BEFORE merging, so we can diff against it below
+    ORIGINAL_DST=$(mktemp)
+    trap 'rm -f "$ORIGINAL_DST"' EXIT
+    cp "$DST_SETTINGS" "$ORIGINAL_DST"
+
     # Merge: add missing enabledPlugins + extraKnownMarketplaces, keep existing values
     MERGED=$(jq -s '
       .[0] as $existing |
@@ -124,24 +129,40 @@ else
         )
       } +
       ($existing | del(.enabledPlugins, .extraKnownMarketplaces))
-    ' "$DST_SETTINGS" "$SRC_SETTINGS")
+    ' "$ORIGINAL_DST" "$SRC_SETTINGS")
 
     echo "$MERGED" > "$DST_SETTINGS"
     log "Merged plugins + marketplaces into existing ~/.claude/settings.json"
 
-    # Show what was added
-    ADDED_PLUGINS=$(jq -r '
-      (input.enabledPlugins // {}) as $src |
-      (input.enabledPlugins // {}) as $dst |  # read existing first
-      ($src | keys[]) |
-      select(. as $k | ($dst | has($k)) | not)
-    ' "$SRC_SETTINGS" "$DST_SETTINGS" 2>/dev/null || true)
+    # Show what was added (diff source against the pre-merge snapshot, not the file we just overwrote)
+    ADDED_PLUGINS=$(jq -s -r '
+      (.[0].enabledPlugins // {}) as $existing |
+      (.[1].enabledPlugins // {}) as $source |
+      ($source | keys[]) |
+      select(. as $k | ($existing | has($k)) | not)
+    ' "$ORIGINAL_DST" "$SRC_SETTINGS" 2>/dev/null || true)
 
     if [[ -n "$ADDED_PLUGINS" ]]; then
       while IFS= read -r plugin; do
         log "  + plugin: $plugin"
       done <<< "$ADDED_PLUGINS"
     fi
+
+    ADDED_MARKETPLACES=$(jq -s -r '
+      (.[0].extraKnownMarketplaces // {}) as $existing |
+      (.[1].extraKnownMarketplaces // {}) as $source |
+      ($source | keys[]) |
+      select(. as $k | ($existing | has($k)) | not)
+    ' "$ORIGINAL_DST" "$SRC_SETTINGS" 2>/dev/null || true)
+
+    if [[ -n "$ADDED_MARKETPLACES" ]]; then
+      while IFS= read -r marketplace; do
+        log "  + marketplace: $marketplace"
+      done <<< "$ADDED_MARKETPLACES"
+    fi
+
+    rm -f "$ORIGINAL_DST"
+    trap - EXIT
   fi
 fi
 

@@ -69,7 +69,7 @@ fi
 hdr "3. settings.json"
 if [[ -f "$CLAUDE/settings.json" ]]; then
   cp "$CLAUDE/settings.json" "$DEST/settings.json"
-  log "Synced settings.json ($(jq '.enabledPlugins | keys | length' "$DEST/settings.json" 2>/dev/null || echo '?') plugins)"
+  log "Synced settings.json ($(jq '.enabledPlugins | keys | length' "$DEST/settings.json" 2>/dev/null || echo '?') plugins, $(jq '.extraKnownMarketplaces | keys | length' "$DEST/settings.json" 2>/dev/null || echo '?') marketplaces)"
 else
   warn "~/.claude/settings.json not found — skipping"
 fi
