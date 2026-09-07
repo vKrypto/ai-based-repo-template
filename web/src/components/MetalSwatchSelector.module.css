@@ -1,0 +1,36 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 0.8125rem;
+}
+
+.field > span {
+  color: var(--color-muted);
+}
+
+.field > span strong {
+  color: var(--color-ink);
+}
+
+.swatches {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.swatch,
+.swatchSelected {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: var(--swatch-color);
+  cursor: pointer;
+  padding: 0;
+}
+
+.swatchSelected {
+  border-color: var(--color-ink);
+  box-shadow: 0 0 0 1px var(--color-ink);
+}

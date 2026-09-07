@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: barebrilliant
+          POSTGRES_PASSWORD: barebrilliant
+          POSTGRES_DB: barebrilliant
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U barebrilliant"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://barebrilliant:barebrilliant@localhost:5432/barebrilliant
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npm run types
+      - run: npm run lint
+      - run: npm run migrate:up --workspace=server
+      - run: npm run test -- --watch=false
+      - run: docker compose build

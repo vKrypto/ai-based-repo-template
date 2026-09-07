@@ -1,0 +1,36 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 0.8125rem;
+}
+
+.field > span {
+  color: var(--color-muted);
+}
+
+.field > span strong {
+  color: var(--color-ink);
+}
+
+.pills {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pill,
+.pillSelected {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.25rem;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.pillSelected {
+  border-color: var(--color-ink);
+  font-weight: 600;
+}

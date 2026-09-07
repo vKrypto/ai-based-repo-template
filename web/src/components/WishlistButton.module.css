@@ -1,0 +1,18 @@
+.button,
+.buttonActive {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--color-accent);
+  cursor: pointer;
+}
+
+.button svg,
+.buttonActive svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}

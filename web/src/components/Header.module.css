@@ -1,0 +1,90 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 1.25rem 1.5rem;
+  background: var(--bb-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.0625rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  letter-spacing: 0.015625rem;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.nav a:hover {
+  color: var(--color-ink);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.actionLink {
+  position: relative;
+  text-decoration: none;
+  color: var(--color-muted);
+  font-size: 0.8125rem;
+  letter-spacing: 0.015625rem;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.actionLink:hover {
+  color: var(--color-ink);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.125rem;
+  height: 1.125rem;
+  margin-left: 0.375rem;
+  padding: 0 0.25rem;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--bb-bg);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .nav {
+    gap: 0.75rem 1rem;
+  }
+}
